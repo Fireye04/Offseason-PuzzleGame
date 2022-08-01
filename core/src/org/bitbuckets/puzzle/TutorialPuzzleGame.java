@@ -15,8 +15,6 @@ public class TutorialPuzzleGame implements ApplicationListener  {
 
     SpriteBatch batch;
     GraphicsSystem system;
-    Texture board;
-    TextureRegion region;
 
     @Override
     public void create() {
@@ -35,33 +33,6 @@ public class TutorialPuzzleGame implements ApplicationListener  {
 
         int squareSizePx = shortestScreenSizePx / 8; //grid of 8
         system = new GraphicsSystem(squareSizePx, sprites); //graphics system is done
-
-        int nextPow2=Integer.highestOneBit(shortestScreenSizePx-1)<<1;
-
-        Pixmap pixmap = new Pixmap( nextPow2, nextPow2, Pixmap.Format.RGBA8888 );
-
-        pixmap.setColor(Color.GRAY);
-        pixmap.fillRectangle(0,0,shortestScreenSizePx,shortestScreenSizePx);
-
-
-        pixmap.setColor(Color.WHITE);
-
-        int y=0;
-        int x=0;
-        for(int i=0;i<32;i++)
-        {
-            pixmap.fillRectangle(x*squareSizePx,y*squareSizePx,squareSizePx,squareSizePx);
-            x+=2;
-            if(x>=8)
-            {
-                y++;
-                x=1-x%8;
-            }
-        }
-
-        board = new Texture( pixmap );
-        pixmap.dispose();
-        region = new TextureRegion(board,0,0,shortestScreenSizePx,shortestScreenSizePx);
     }
 
     @Override
