@@ -1,4 +1,4 @@
-# SokobanBuckets
+# TutorialPuzzleGame
 Let's make a puzzle game to learn java principles!
 
 ## The Goal
@@ -26,15 +26,19 @@ Low-Level
 - gdx: The game engine we are using
 
 ### Files
-./build.gradle
-- This is the file that contains the script that manages compiling the code
+- **/build.gradle**
+  - This is the file that contains the script that manages compiling the code
+- **/assets**
+  - This is the folder that holds the assets
+- **/core**
+  - This is where the built in starter code goes [write more later pls]
+- **/core/TutorialPuzzleGame.java** *[You code here!]*
+  - This is the main class of the project
+    - Your code branches out from here
+  - If this were a robotics project this would be Robot.java
+- **/core/solution** *[You code here!]*
+  - This is where your code goes!
+  - You can write subsystems here, etc
 
-./assets
-- This is the folder that holds the assets
 
-./core/SokobanGame.java
-- This is where your game code goes - Similar to Robot.java
-
-./core/systems
-- This is where your logic systems should go (will be explained later)
 
