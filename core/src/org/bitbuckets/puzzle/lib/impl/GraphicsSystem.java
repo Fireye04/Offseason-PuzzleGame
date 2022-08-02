@@ -3,20 +3,21 @@ package org.bitbuckets.puzzle.lib.impl;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import org.bitbuckets.puzzle.lib.Graphics;
-import org.bitbuckets.puzzle.lib.core.InternalSystem;
 
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class GraphicsSystem implements Graphics, InternalSystem {
+public class GraphicsSystem implements Graphics {
 
-    private final float squareSizePx;
+    private final float squareWidthPx;
+    private final float squareHeightPx;
     private final Sprite[] sprites;
 
     private final Queue<int[]> stuff = new LinkedList<>();
 
-    public GraphicsSystem(int squareSizePx, Sprite[] sprites) {
-        this.squareSizePx = squareSizePx;
+    public GraphicsSystem(float squareWidthPx, float squareHeightPx, Sprite[] sprites) {
+        this.squareWidthPx = squareWidthPx;
+        this.squareHeightPx = squareHeightPx;
         this.sprites = sprites;
     }
 
@@ -24,12 +25,14 @@ public class GraphicsSystem implements Graphics, InternalSystem {
     public void drawTexture(int texture, int x, int y) {
         int[] order = new int[3];
         order[0] = texture;
-        order[1] = x;
-        order[2] = y;
+        order[1] = x - 1;
+        order[2] = y - 1;
 
         stuff.add(order);
     }
 
+
+    //TODO this should comply to the documentation
     @Override
     public void draw(SpriteBatch batch) {
         while (!stuff.isEmpty()) {
@@ -39,12 +42,13 @@ public class GraphicsSystem implements Graphics, InternalSystem {
             int y = order[2];
             Sprite sprite = sprites[order[0]];
 
-            float spriteScalingFactor = squareSizePx / sprite.getHeight();
+            float spriteWidth = sprite.getWidth();
+            float spriteHeight = sprite.getHeight();
 
-            sprite.setScale(spriteScalingFactor);
+            sprite.setScale(squareWidthPx / spriteWidth, squareHeightPx / spriteHeight);
 
-            sprite.setX(y * squareSizePx + squareSizePx / 2 - sprite.getWidth() / 2); //place centered
-            sprite.setY(x * squareSizePx + squareSizePx / 2 - sprite.getHeight() / 2);
+            sprite.setX(x * squareWidthPx + squareWidthPx / 2 - spriteWidth / 2); //place centered and stretched
+            sprite.setY(y * squareHeightPx + squareHeightPx / 2 - spriteHeight / 2);
             sprite.draw(batch);
         }
     }

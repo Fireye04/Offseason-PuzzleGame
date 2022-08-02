@@ -1,5 +1,11 @@
 package org.bitbuckets.puzzle.lib;
 
+/**
+ * All of the game's textures are described by this file. Since internally the graphics wrapper I wrote uses integers
+ * as ids, I decided to add a class which would highlight exactly what integer referred to which texture.
+ *
+ * Think of this class as an enum. When using
+ */
 public interface Textures {
 
     int BOX = 0;

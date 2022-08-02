@@ -1,28 +1,34 @@
-package org.bitbuckets.puzzle;
+package org.bitbuckets.puzzle.lib;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import org.bitbuckets.puzzle.lib.Textures;
+import org.bitbuckets.puzzle.PuzzleGameSolution;
 import org.bitbuckets.puzzle.lib.impl.GraphicsSystem;
 
-public class TutorialPuzzleGame implements ApplicationListener  {
+/**
+ * Loads the graphics system and the game solution
+ * Don't modify this file unless you know what you are doing
+ */
+public class GameCore implements ApplicationListener  {
 
     SpriteBatch batch;
     GraphicsSystem system;
+    SubSystem solution;
 
     @Override
     public void create() {
 
+        //make a graphics batcher
         batch = new SpriteBatch();
 
-        //graphics code
-        int shortestScreenSizePx = Math.min(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        int screenWidthPx = Gdx.graphics.getWidth();
+        int screenHeightPx = Gdx.graphics.getHeight();
+
+        int squareWidthPx = screenWidthPx / 8;
+        int squareHeightPx = screenHeightPx / 8;
 
         Sprite[] sprites = new Sprite[5];
         sprites[0] = new Sprite(new Texture("box.png"));
@@ -31,8 +37,10 @@ public class TutorialPuzzleGame implements ApplicationListener  {
         sprites[3] = new Sprite(new Texture("target.png"));
         sprites[4] = new Sprite(new Texture("wall.png"));
 
-        int squareSizePx = shortestScreenSizePx / 8; //grid of 8
-        system = new GraphicsSystem(squareSizePx, sprites); //graphics system is done
+        system = new GraphicsSystem(squareWidthPx, squareHeightPx, sprites); //set up a graphics system
+        solution = new PuzzleGameSolution();
+
+        solution.init();
     }
 
     @Override
@@ -41,18 +49,12 @@ public class TutorialPuzzleGame implements ApplicationListener  {
 
     @Override
     public void render() {
-        //game code loop code
 
-
-
-        system.drawTexture(Textures.BOX, 1, 1);
-        system.drawTexture(Textures.FLOOR, 2, 2);
+        solution.periodic(system);
 
         batch.begin();
-
         //batch.draw(region,0,0);
         system.draw(batch);
-
         batch.end();
     }
 
