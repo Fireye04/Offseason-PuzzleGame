@@ -11,7 +11,11 @@ import org.bitbuckets.puzzle.lib.Textures;
 //TODO very first subsystem
 public class PlayerSystem implements SubSystem {
 
-    int[] pose2d = new int[]{8,8};
+    public int[] pose2d = new int[]{8,8};
+
+    public void init () {
+
+    }
 
     @Override
     public void periodic(Graphics graphics) {
